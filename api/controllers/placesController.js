@@ -5,9 +5,10 @@ const helpers = require('./helpers');
 const validParams = ['title', 'description', 'address', 'acceptsCreditCard', 'openHour', 'closeHour'];
 
 const find = (req, res, next) => {
-	Place.findOne({slug: req.params.id})
+	Place.findOne({'_id': req.params.id})
 		.then(place => {
-			req.place = place
+			req.place = place,
+			req.mainObj = place;
 			next()
 		})
 		.catch(err => {
@@ -29,9 +30,8 @@ const index = (req, res)=> {
 
 const create = (req, res, next) => {
 	//Crear nuevos lugares
-	let body = req.body;
 	const params = helpers.buildParams(validParams, req.body)
-
+	params['_user'] = req.user.id;
 	Place.create(params).then(doc => {
 		req.place = doc;
 		next();

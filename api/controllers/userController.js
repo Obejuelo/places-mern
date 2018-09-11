@@ -18,4 +18,14 @@ const create = (req, res, next) => {
 		})
 }
 
-module.exports = {create}
+const myPlaces = (req,res) => {
+	Usuario.findOne({'_id': req.user.id}).then(user => {
+		user.places.then(places => {
+			res.json(places);
+		})
+	}).catch(err => {
+		res.json(err);
+	})
+}
+
+module.exports = { create, myPlaces}

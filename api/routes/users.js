@@ -9,5 +9,6 @@ router.route('/')
     sessionController.generateToken,
     sessionController.sendToken
   )
+  // .get(userController.myPlaces)  //obtener lugares por usuario
 
 module.exports = router;
