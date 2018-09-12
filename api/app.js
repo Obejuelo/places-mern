@@ -21,9 +21,12 @@ app.use(
 );
 
 app.use('/places', require('./routes/places'));
+app.use('/places', require('./routes/visitPlaces'));
 app.use('/users', require('./routes/users'));
 app.use('/session', require('./routes/session'));
 app.use('/favorite', require('./routes/favorites'));
+app.use('/visit', require('./routes/visits'));
+app.use('/application', require('./routes/application'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
