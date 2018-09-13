@@ -15,9 +15,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(require('./middlewares/findAppBySecret'));
+app.use(require('./middlewares/findAppByApplicationId'));
+app.use(require('./middlewares/authApp')().unless({ method: 'OPTIONS' }));
+app.use(require('./middlewares/allowCORs')().unless({path: '/public'}));
+
 app.use(
   jwtMiddleware({secret: secret.jwtSecret})
-    .unless({path: ['/session','/users'], method: 'GET'})
+    .unless({path: ['/session','/users'], method: ['GET','OPTIONS']})
 );
 
 app.use('/places', require('./routes/places'));

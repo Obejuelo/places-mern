@@ -13,10 +13,9 @@ function find(req,res,next){
 }
 
 function index(req,res) {
-	Usuario.findOne({ '_id': req.user.id }).then(user => {
-		user.favorite.then(places => {
-			res.json(places);
-		})
+	if(!req.fullUser) return res.json({});
+	req.fullUser.favorite.then(places => {
+		res.json(places);
 	}).catch(err => {
 		res.json(err);
 	})
